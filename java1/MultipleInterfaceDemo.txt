@@ -1,0 +1,41 @@
+// Q: Multiple Interfaces in One Class
+// Implement two interfaces in a single class and invoke their methods.
+
+import java.util.Scanner;
+
+// Interface 1
+interface Printable {
+    void print(String content);
+}
+
+// Interface 2
+interface Savable {
+    void save(String content);
+}
+
+// Single class implementing both interfaces
+class DocumentManager implements Printable, Savable {
+    public void print(String content) {
+        System.out.println("Printing Document: " + content);
+    }
+
+    public void save(String content) {
+        System.out.println("Saving Document: " + content);
+    }
+}
+
+// Main class to test
+public class MultipleInterfaceDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter document content: ");
+        String content = scanner.nextLine();
+
+        DocumentManager manager = new DocumentManager();
+        manager.print(content);
+        manager.save(content);
+
+        scanner.close();
+    }
+}

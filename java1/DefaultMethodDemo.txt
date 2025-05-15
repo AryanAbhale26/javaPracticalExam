@@ -1,0 +1,44 @@
+// Q: Use Interface with Default Method
+// Create an interface with a default greeting method and override it in implementing class.
+
+import java.util.Scanner;
+
+// Interface with a default method
+interface Greeter {
+    default void greet(String name) {
+        System.out.println("Hello, " + name + "! (from default method)");
+    }
+}
+
+// Implementing class overrides the default method
+class CustomGreeter implements Greeter {
+    @Override
+    public void greet(String name) {
+        System.out.println("Hi " + name + ", welcome to the custom greeting system!");
+    }
+}
+
+// Another class that uses the default implementation
+class DefaultGreeter implements Greeter {
+    // No override: uses default method from interface
+}
+
+public class DefaultMethodDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        Greeter custom = new CustomGreeter();
+        Greeter defaultGreet = new DefaultGreeter();
+
+        System.out.println("\nUsing CustomGreeter:");
+        custom.greet(name);
+
+        System.out.println("\nUsing DefaultGreeter:");
+        defaultGreet.greet(name);
+
+        scanner.close();
+    }
+}

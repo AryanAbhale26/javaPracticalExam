@@ -1,0 +1,103 @@
+// Q: Apply SOLID Principles (L and I)
+// Design a simple library system following all SOLID principles with at least 2-3 classes/interfaces.
+
+import java.util.*;
+
+// Step 1: Interface Segregation Principle - break large interface into smaller ones
+interface Borrowable {
+    void borrow();
+}
+
+interface Returnable {
+    void returnItem();
+}
+
+interface Reservable {
+    void reserve();
+}
+
+// Step 2: Base class for library items
+abstract class LibraryItem {
+    protected String title;
+
+    public LibraryItem(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+}
+
+// Step 3: Book can be borrowed and returned (Liskov Substitution Principle is satisfied)
+class Book extends LibraryItem implements Borrowable, Returnable {
+    public Book(String title) {
+        super(title);
+    }
+
+    public void borrow() {
+        System.out.println("Borrowed Book: " + title);
+    }
+
+    public void returnItem() {
+        System.out.println("Returned Book: " + title);
+    }
+}
+
+// Step 4: Journal can only be reserved
+class Journal extends LibraryItem implements Reservable {
+    public Journal(String title) {
+        super(title);
+    }
+
+    public void reserve() {
+        System.out.println("Reserved Journal: " + title);
+    }
+}
+
+// Step 5: Manager class demonstrating LSP and ISP
+class LibraryManager {
+    private List<LibraryItem> items = new ArrayList<>();
+
+    public void addItem(LibraryItem item) {
+        items.add(item);
+    }
+
+    public void performActions() {
+        for (LibraryItem item : items) {
+            System.out.println("\nItem: " + item.getTitle());
+
+            if (item instanceof Borrowable) {
+                ((Borrowable) item).borrow();
+            }
+
+            if (item instanceof Returnable) {
+                ((Returnable) item).returnItem();
+            }
+
+            if (item instanceof Reservable) {
+                ((Reservable) item).reserve();
+            }
+        }
+    }
+}
+
+// Step 6: Main class with user input
+public class LibrarySolidLIDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        LibraryManager manager = new LibraryManager();
+
+        System.out.print("Enter book title: ");
+        String bookTitle = scanner.nextLine();
+        manager.addItem(new Book(bookTitle));
+
+        System.out.print("Enter journal title: ");
+        String journalTitle = scanner.nextLine();
+        manager.addItem(new Journal(journalTitle));
+
+        manager.performActions();
+
+        scanner.close();
+    }
+}

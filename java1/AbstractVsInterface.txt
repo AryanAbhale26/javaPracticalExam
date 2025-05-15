@@ -1,0 +1,59 @@
+// Question: Compare Abstract Class and Interface
+// Create a program showing key differences in features and usage of both.
+
+import java.util.Scanner;
+
+// Abstract class example
+abstract class Animal {
+    // Abstract method (does not have a body)
+    public abstract void sound();
+
+    // Regular method
+    public void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+// Interface example
+interface AnimalBehavior {
+    // Abstract method (interface methods are by default abstract)
+    void sound();
+    
+    // Default method (from Java 8 onwards)
+    default void sleep() {
+        System.out.println("This animal sleeps.");
+    }
+}
+
+class Dog extends Animal implements AnimalBehavior {
+    // Implementing abstract method from abstract class
+    public void sound() {
+        System.out.println("Bark from abstract class and interface");
+    }
+    
+    // Overriding the regular method from abstract class
+    @Override
+    public void eat() {
+        System.out.println("The dog eats bone.");
+    }
+}
+
+public class AbstractVsInterface {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Create a Dog object and compare Abstract Class and Interface.");
+        Dog dog = new Dog();
+        
+        // Using the method from the abstract class
+        dog.eat();
+        
+        // Using the method from the interface
+        dog.sleep();
+        
+        // Calling implemented method
+        dog.sound();
+        
+        sc.close();
+    }
+}

@@ -1,0 +1,36 @@
+public class SingletonExample {
+
+    // Step 1: Create a private static instance of the class
+    private static SingletonExample instance;
+
+    // Step 2: Make the constructor private so that this class cannot be instantiated from outside
+    private SingletonExample() {
+        System.out.println("Singleton instance created");
+    }
+
+    // Step 3: Provide a public static method to get the instance of the class
+    public static SingletonExample getInstance() {
+        if (instance == null) {
+            instance = new SingletonExample();
+        }
+        return instance;
+    }
+
+    public void showMessage() {
+        System.out.println("Hello from Singleton instance!");
+    }
+
+    // Main method to demonstrate access from multiple points
+    public static void main(String[] args) {
+        // Access Singleton from first point
+        SingletonExample obj1 = SingletonExample.getInstance();
+        obj1.showMessage();
+
+        // Access Singleton from second point
+        SingletonExample obj2 = SingletonExample.getInstance();
+        obj2.showMessage();
+
+        // Check if both references point to the same instance
+        System.out.println("obj1 and obj2 refer to same instance: " + (obj1 == obj2));
+    }
+}

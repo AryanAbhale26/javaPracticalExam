@@ -1,0 +1,68 @@
+// Q: Apply Interface Segregation Principle
+// Create separate interfaces for print, scan, and fax operations and implement only required ones.
+
+interface Printable {
+    void printDocument();
+}
+
+interface Scannable {
+    void scanDocument();
+}
+
+interface Faxable {
+    void faxDocument();
+}
+
+// Implements only print functionality
+class SimplePrinter implements Printable {
+    public void printDocument() {
+        System.out.println("Printing document using SimplePrinter...");
+    }
+}
+
+// Implements print and scan functionality
+class OfficePrinter implements Printable, Scannable {
+    public void printDocument() {
+        System.out.println("Printing document using OfficePrinter...");
+    }
+
+    public void scanDocument() {
+        System.out.println("Scanning document using OfficePrinter...");
+    }
+}
+
+// Implements all three
+class MultiFunctionPrinter implements Printable, Scannable, Faxable {
+    public void printDocument() {
+        System.out.println("Printing document using MultiFunctionPrinter...");
+    }
+
+    public void scanDocument() {
+        System.out.println("Scanning document using MultiFunctionPrinter...");
+    }
+
+    public void faxDocument() {
+        System.out.println("Faxing document using MultiFunctionPrinter...");
+    }
+}
+
+// Main class to test behavior
+public class InterfaceSegregationDemo {
+    public static void main(String[] args) {
+        Printable simplePrinter = new SimplePrinter();
+        simplePrinter.printDocument();
+
+        System.out.println();
+
+        OfficePrinter officePrinter = new OfficePrinter();
+        officePrinter.printDocument();
+        officePrinter.scanDocument();
+
+        System.out.println();
+
+        MultiFunctionPrinter mfp = new MultiFunctionPrinter();
+        mfp.printDocument();
+        mfp.scanDocument();
+        mfp.faxDocument();
+    }
+}

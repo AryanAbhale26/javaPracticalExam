@@ -1,0 +1,61 @@
+// Step 1: Define small, segregated interfaces
+
+interface Printable {
+    void print();
+}
+
+interface Scannable {
+    void scan();
+}
+
+interface Faxable {
+    void fax();
+}
+
+// Step 2: Concrete classes implementing only required interfaces
+
+class BasicPrinter implements Printable {
+    public void print() {
+        System.out.println("Printing document using BasicPrinter...");
+    }
+}
+
+class MultiFunctionPrinter implements Printable, Scannable, Faxable {
+    public void print() {
+        System.out.println("Printing document using MultiFunctionPrinter...");
+    }
+
+    public void scan() {
+        System.out.println("Scanning document using MultiFunctionPrinter...");
+    }
+
+    public void fax() {
+        System.out.println("Faxing document using MultiFunctionPrinter...");
+    }
+}
+
+class ScannerOnly implements Scannable {
+    public void scan() {
+        System.out.println("Scanning document using ScannerOnly...");
+    }
+}
+
+// Step 3: Main class
+public class PrinterDemo {
+    public static void main(String[] args) {
+        Printable basicPrinter = new BasicPrinter();
+        basicPrinter.print();
+
+        System.out.println();
+
+        MultiFunctionPrinter mfp = new MultiFunctionPrinter();
+        mfp.print();
+        mfp.scan();
+        mfp.fax();
+
+        System.out.println();
+
+        Scannable scanner = new ScannerOnly();
+        scanner.scan();
+    }
+}

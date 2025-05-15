@@ -1,0 +1,61 @@
+// Q: Use Interface for Polymorphism
+// Demonstrate how different implementations of an interface can be used interchangeably.
+
+import java.util.Scanner;
+
+// Step 1: Define an interface
+interface Animal {
+    void makeSound();
+}
+
+// Step 2: Create multiple implementations
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Dog says: Woof!");
+    }
+}
+
+class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("Cat says: Meow!");
+    }
+}
+
+class Cow implements Animal {
+    public void makeSound() {
+        System.out.println("Cow says: Moo!");
+    }
+}
+
+// Step 3: Main class demonstrating polymorphism
+public class InterfacePolymorphismDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter animal (dog/cat/cow): ");
+        String choice = scanner.nextLine().toLowerCase();
+
+        Animal animal;
+
+        switch (choice) {
+            case "dog":
+                animal = new Dog();
+                break;
+            case "cat":
+                animal = new Cat();
+                break;
+            case "cow":
+                animal = new Cow();
+                break;
+            default:
+                System.out.println("Unknown animal.");
+                scanner.close();
+                return;
+        }
+
+        // Polymorphic behavior
+        animal.makeSound();
+
+        scanner.close();
+    }
+}

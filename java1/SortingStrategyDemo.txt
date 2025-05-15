@@ -1,0 +1,154 @@
+// Question: Implement different sorting algorithms (e.g., BubbleSort, QuickSort, MergeSort). 
+// Create a class to allow switching between these algorithms at runtime.
+
+import java.util.*;
+
+interface SortingStrategy {
+    void sort(int[] array);
+}
+
+class BubbleSort implements SortingStrategy {
+    public void sort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (array[j] > array[j+1]) {
+                    // swap
+                    int temp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = temp;
+                }
+        System.out.println("Sorted using BubbleSort.");
+    }
+}
+
+class QuickSort implements SortingStrategy {
+    public void sort(int[] array) {
+        quickSort(array, 0, array.length - 1);
+        System.out.println("Sorted using QuickSort.");
+    }
+
+    private void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    private int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = (low - 1); 
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+}
+
+class MergeSort implements SortingStrategy {
+    public void sort(int[] array) {
+        mergeSort(array, 0, array.length - 1);
+        System.out.println("Sorted using MergeSort.");
+    }
+
+    private void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int middle = (left + right) / 2;
+
+            mergeSort(arr, left, middle);
+            mergeSort(arr, middle + 1, right);
+
+            merge(arr, left, middle, right);
+        }
+    }
+
+    private void merge(int[] arr, int left, int middle, int right) {
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        System.arraycopy(arr, left, L, 0, n1);
+        System.arraycopy(arr, middle + 1, R, 0, n2);
+
+        int i = 0, j = 0, k = left;
+
+        while (i < n1 && j < n2)
+            arr[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
+
+        while (i < n1)
+            arr[k++] = L[i++];
+
+        while (j < n2)
+            arr[k++] = R[j++];
+    }
+}
+
+class SortContext {
+    private SortingStrategy strategy;
+
+    public void setStrategy(SortingStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void executeStrategy(int[] array) {
+        strategy.sort(array);
+    }
+}
+
+public class SortingStrategyDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        SortContext context = new SortContext();
+
+        System.out.print("Enter number of elements: ");
+        int n = scanner.nextInt();
+        int[] array = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        System.out.print("Choose sorting algorithm (bubble/quick/merge): ");
+        String choice = scanner.next().toLowerCase();
+
+        switch (choice) {
+            case "bubble":
+                context.setStrategy(new BubbleSort());
+                break;
+            case "quick":
+                context.setStrategy(new QuickSort());
+                break;
+            case "merge":
+                context.setStrategy(new MergeSort());
+                break;
+            default:
+                System.out.println("Invalid choice. Defaulting to BubbleSort.");
+                context.setStrategy(new BubbleSort());
+        }
+
+        context.executeStrategy(array);
+
+        System.out.println("Sorted array:");
+        for (int val : array) {
+            System.out.print(val + " ");
+        }
+
+        scanner.close();
+    }
+}

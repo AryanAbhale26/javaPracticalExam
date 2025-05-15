@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+// Step 1: Define the Shape interface
+interface Shape {
+    void draw();
+}
+
+// Step 2: Create concrete classes implementing the Shape interface
+class Circle implements Shape {
+    public void draw() {
+        System.out.println("Drawing a Circle");
+    }
+}
+
+class Square implements Shape {
+    public void draw() {
+        System.out.println("Drawing a Square");
+    }
+}
+
+class Rectangle implements Shape {
+    public void draw() {
+        System.out.println("Drawing a Rectangle");
+    }
+}
+
+// Step 3: Create a Factory class to generate objects of concrete classes based on input
+class ShapeFactory {
+    public Shape getShape(String shapeType) {
+        if (shapeType == null) return null;
+        switch (shapeType.toLowerCase()) {
+            case "circle": return new Circle();
+            case "square": return new Square();
+            case "rectangle": return new Rectangle();
+            default: return null;
+        }
+    }
+}
+
+// Step 4: Demo class with main method
+public class ShapeFactoryDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ShapeFactory shapeFactory = new ShapeFactory();
+
+        System.out.print("Enter shape type (Circle, Square, Rectangle): ");
+        String input = scanner.nextLine();
+
+        Shape shape = shapeFactory.getShape(input);
+        if (shape != null) {
+            shape.draw();
+        } else {
+            System.out.println("Invalid shape type.");
+        }
+
+        scanner.close();
+    }
+}

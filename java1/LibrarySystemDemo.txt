@@ -1,0 +1,97 @@
+import java.util.*;
+
+// Interface for library items
+interface LibraryItem {
+    String getDetails();
+}
+
+// SRP: Book class has one reason to change – book-related changes only
+class Book implements LibraryItem {
+    private String title;
+    private String author;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    public String getDetails() {
+        return "Book: " + title + " by " + author;
+    }
+}
+
+// OCP: We can extend LibraryItem without modifying existing code
+class Magazine implements LibraryItem {
+    private String title;
+    private String publisher;
+
+    public Magazine(String title, String publisher) {
+        this.title = title;
+        this.publisher = publisher;
+    }
+
+    public String getDetails() {
+        return "Magazine: " + title + " published by " + publisher;
+    }
+}
+
+// SRP: Handles library operations (not item data)
+class LibraryManager {
+    private List<LibraryItem> items = new ArrayList<>();
+
+    public void addItem(LibraryItem item) {
+        items.add(item);
+    }
+
+    public void displayItems() {
+        System.out.println("\nLibrary Collection:");
+        for (LibraryItem item : items) {
+            System.out.println(item.getDetails());
+        }
+    }
+}
+
+// Main class
+public class LibrarySystemDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        LibraryManager library = new LibraryManager();
+
+        while (true) {
+            System.out.println("\n1. Add Book\n2. Add Magazine\n3. View Library\n4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter book title: ");
+                    String bTitle = scanner.nextLine();
+                    System.out.print("Enter book author: ");
+                    String bAuthor = scanner.nextLine();
+                    library.addItem(new Book(bTitle, bAuthor));
+                    break;
+
+                case 2:
+                    System.out.print("Enter magazine title: ");
+                    String mTitle = scanner.nextLine();
+                    System.out.print("Enter publisher: ");
+                    String mPublisher = scanner.nextLine();
+                    library.addItem(new Magazine(mTitle, mPublisher));
+                    break;
+
+                case 3:
+                    library.displayItems();
+                    break;
+
+                case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}

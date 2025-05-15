@@ -1,0 +1,50 @@
+// Q: Abstract Class with Constructor
+// Create an abstract class with a constructor and extend it in a subclass with additional logic.
+
+import java.util.Scanner;
+
+// Abstract class with constructor
+abstract class Person {
+    protected String name;
+
+    public Person(String name) {
+        this.name = name;
+        System.out.println("Person constructor called. Name set to: " + name);
+    }
+
+    public abstract void displayRole();
+}
+
+// Subclass adds additional logic
+class Student extends Person {
+    private String course;
+
+    public Student(String name, String course) {
+        super(name); // calls constructor of abstract class
+        this.course = course;
+    }
+
+    @Override
+    public void displayRole() {
+        System.out.println("Student Name: " + name);
+        System.out.println("Enrolled in: " + course);
+    }
+}
+
+public class AbstractConstructorDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter course enrolled: ");
+        String course = scanner.nextLine();
+
+        Person student = new Student(name, course);
+        System.out.println();
+        student.displayRole();
+
+        scanner.close();
+    }
+}
